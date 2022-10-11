@@ -5,11 +5,7 @@ void main() {
   print(CarType.sedan.index);
 
   
-  CarType carType = CarType.suv;
-
-  for (var v in CarType.values) {
-    print('value: $v');
-  }
+  CarType? carType;
 
   switch (carType) {
     case CarType.hatchback:
