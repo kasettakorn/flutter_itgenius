@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/home.dart';
 
 class WorkshopWelcome extends StatefulWidget {
   const WorkshopWelcome({super.key});
@@ -100,7 +101,11 @@ class _WorkshopWelcomeState extends State<WorkshopWelcome> {
           width: MediaQuery.of(context).size.width - 80,
           child: ElevatedButton(
             onPressed: () {
-              print('Getting start');
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (context) => Home()));
+              // Navigator.pushReplacement(
+              //     context, MaterialPageRoute(builder: (context) => Home()));
+              Navigator.pushNamed(context, '/home');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,

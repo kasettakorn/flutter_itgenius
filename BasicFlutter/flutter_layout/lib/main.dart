@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_layout/expanded_widget.dart';
+import 'package:flutter_layout/home.dart';
 import 'package:flutter_layout/workshop_welcome.dart';
 // import 'package:flutter_layout/container_widget_layout.dart';
 // import 'package:flutter_layout/row_column_widget.dart';
@@ -28,7 +29,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'IBMPlexSansThai',
       ),
-      home: WorkshopWelcome(),
+      routes: {
+        '/welcome': (context) => WorkshopWelcome(),
+        '/home': (context) => Home(),
+      },
+      initialRoute: '/welcome',
     );
   }
 }
