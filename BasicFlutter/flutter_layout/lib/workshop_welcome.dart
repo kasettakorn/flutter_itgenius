@@ -50,7 +50,6 @@ class _WorkshopWelcomeState extends State<WorkshopWelcome> {
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
-              fontFamily: 'IBMPlexSansThai',
             ),
           ),
         ),
@@ -64,7 +63,6 @@ class _WorkshopWelcomeState extends State<WorkshopWelcome> {
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
-              fontFamily: 'IBMPlexSansThai',
             ),
           ),
         ),
@@ -81,7 +79,6 @@ class _WorkshopWelcomeState extends State<WorkshopWelcome> {
           style: TextStyle(
             color: Colors.white,
             fontSize: 30,
-            fontFamily: 'IBMPlexSansThai',
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -90,7 +87,6 @@ class _WorkshopWelcomeState extends State<WorkshopWelcome> {
           style: TextStyle(
             color: Colors.white,
             fontSize: 22,
-            fontFamily: 'IBMPlexSansThai',
           ),
         ),
       ],
@@ -115,7 +111,6 @@ class _WorkshopWelcomeState extends State<WorkshopWelcome> {
               'เริ่มต้นใช้งาน',
               style: TextStyle(
                 fontSize: 18,
-                fontFamily: 'IBMPlexSansThai',
                 fontWeight: FontWeight.w600,
               ),
             ),
