@@ -31,16 +31,18 @@ Widget submitButton(
 
 Widget inputFieldWidget(BuildContext context, Icon icon, String hintText,
     Function onValidate, Function onSave,
-    {String initial = '',
+    {String initialValue = '',
     bool autoFocus = false,
     bool obsecureText = false,
     int maxLength = 30,
-    var keyboardType = TextInputType.text}) {
+    var keyboardType = TextInputType.text,
+    var maxLine}) {
   return TextFormField(
     autofocus: autoFocus,
     obscureText: obsecureText,
-    initialValue: initial,
+    initialValue: initialValue,
     keyboardType: keyboardType,
+    maxLines: maxLine,
     decoration: InputDecoration(
       hintText: hintText,
       hintStyle: TextStyle(color: secondaryText, fontSize: 14),

@@ -43,48 +43,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               'ไม่สามารถลงทะเบียนได้ กรุณาลองอีกครั้ง');
         }
       }
-
-      // var checkNetwork = await Connectivity().checkConnectivity();
-
-      // if (checkNetwork == ConnectivityResult.none) {
-
-      // } else {
-      //   // Call login API
-      //   var response = await CallAPI()
-      //       .loginAPI({"username": _username, "password": _password});
-
-      //   var body = json.decode(response.body);
-
-      //   if (body['code'] == '200') {
-      //     //Shared preferences
-      //     SharedPreferences sharedPreferences =
-      //         await SharedPreferences.getInstance();
-
-      //     sharedPreferences.setInt('userStep', 1);
-      //     sharedPreferences.setString("userID", body['data']['id']);
-      //     sharedPreferences.setString("userName", body['data']['username']);
-      //     sharedPreferences.setString("fullName", body['data']['fullname']);
-      //     sharedPreferences.setString(
-      //         "imgProfile", body['data']['img_profile']);
-      //     sharedPreferences.setString("userStatus", body['data']['status']);
-
-      //     Navigator.pushReplacementNamed(context, '/dashboard');
-      //   } else {
-      //     AlertDialog alert = AlertDialog(
-      //       title: Text('เกิดข้อผิดพลาด'),
-      //       content: Text('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'),
-      //       actions: [
-      //         TextButton(
-      //             onPressed: () => Navigator.pop(context), child: Text('ตกลง')),
-      //       ],
-      //     );
-
-      //     showDialog(
-      //         barrierDismissible: false,
-      //         context: context,
-      //         builder: (BuildContext context) => alert);
-      //   }
-      // }
     } else {
       Utility.getInstance()!.showAlertDialog(
           context, 'เกิดข้อผิดพลาด', 'กรุณากรอกข้อมูลให้ครบถ้วน');

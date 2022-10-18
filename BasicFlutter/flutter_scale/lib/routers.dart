@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_scale/screens/addproduct/add_product_screen.dart';
 import 'package:flutter_scale/screens/bottom_nav_menu/notification_screen.dart';
 import 'package:flutter_scale/screens/bottom_nav_menu/profile_screen.dart';
 import 'package:flutter_scale/screens/bottom_nav_menu/report_screen.dart';
@@ -11,6 +12,8 @@ import 'package:flutter_scale/screens/drawer_menu/contact_screen.dart';
 import 'package:flutter_scale/screens/drawer_menu/info_screen.dart';
 import 'package:flutter_scale/screens/login/login_screen.dart';
 import 'package:flutter_scale/screens/login/register_screen.dart';
+import 'package:flutter_scale/screens/news_detail/news_detail_screen.dart';
+import 'package:flutter_scale/screens/updateproduct/update_product_screen.dart';
 import 'package:flutter_scale/screens/welcome/welcome_screen.dart';
 
 Map<String, WidgetBuilder> routes = {
@@ -25,4 +28,7 @@ Map<String, WidgetBuilder> routes = {
   '/noti': (BuildContext context) => NotificationScreen(),
   '/settings': (BuildContext context) => SettingsScreen(),
   '/profile': (BuildContext context) => ProfileScreen(),
+  '/news_detail': (BuildContext context) => NewsDetailScreen(),
+  '/add_product': (BuildContext context) => AddProductScreen(),
+  '/update_product': (BuildContext context) => UpdateProductScreen(),
 };
