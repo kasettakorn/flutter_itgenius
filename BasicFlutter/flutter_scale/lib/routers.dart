@@ -10,11 +10,13 @@ import 'package:flutter_scale/screens/drawer_menu/about_screen.dart';
 import 'package:flutter_scale/screens/drawer_menu/contact_screen.dart';
 import 'package:flutter_scale/screens/drawer_menu/info_screen.dart';
 import 'package:flutter_scale/screens/login/login_screen.dart';
+import 'package:flutter_scale/screens/login/register_screen.dart';
 import 'package:flutter_scale/screens/welcome/welcome_screen.dart';
 
 Map<String, WidgetBuilder> routes = {
   '/welcome': (BuildContext context) => WelcomeScreen(),
   '/login': (BuildContext context) => LoginScreen(),
+  '/register': (BuildContext context) => RegisterScreen(),
   '/about': (BuildContext context) => AboutScreen(),
   '/info': (BuildContext context) => InfoScreen(),
   '/contact': (BuildContext context) => ContactScreen(),

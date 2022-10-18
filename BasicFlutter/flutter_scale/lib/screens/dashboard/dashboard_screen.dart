@@ -7,6 +7,7 @@ import 'package:flutter_scale/screens/bottom_nav_menu/profile_screen.dart';
 import 'package:flutter_scale/screens/bottom_nav_menu/report_screen.dart';
 import 'package:flutter_scale/screens/bottom_nav_menu/settings_screen.dart';
 import 'package:flutter_scale/themes/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -16,6 +17,10 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  late SharedPreferences sharedPreferences;
+
+  String? _fullname, _username, _avatar, _userStatus;
+
   int _currentIndex = 0;
   String _title = 'Dashboard';
 
@@ -51,111 +56,158 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+  readUserProfile() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      _fullname = sharedPreferences.getString('fullName');
+      _username = sharedPreferences.getString('userName');
+      _avatar = sharedPreferences.getString('imgProfile');
+      _userStatus = sharedPreferences.getString('userStatus');
+    });
+  }
+
+  logout() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('คุณแน่ใจหรือไม่ ?'),
+                  content: Text('คุณแน่ใจที่จะออกจากแอพหรือไม่'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text('No'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      child: Text('Yes'),
+                    ),
+                  ],
+                ))) ??
+        false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readUserProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_title),
-      ),
-      body: _children[_currentIndex],
-      drawer: Drawer(
-        backgroundColor: primary,
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text('รณกร หอมเปาะ'),
-              accountEmail: Text('kasettakorn_techno@hotmail.com'),
-              currentAccountPicture: CircleAvatar(
-                radius: 60.0,
-                backgroundImage: NetworkImage(
-                  'https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/298958832_5344336822301309_2596797819452426062_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeH4SZenMvv10G3svSj5iAHH7o7KuyQT3rnujsq7JBPeuUi5iiDHtaMLqk_KuB6xUdKIElq90eKJrpuJ-lXFapSn&_nc_ohc=JAcBkO80ORAAX9JcrA6&tn=O_GvTQGmuCmiLxoO&_nc_ht=scontent.fbkk28-1.fna&oh=00_AT8MmzaZcDpaDsAGsDxem2oTiupi2SbmlmpeCKtcJabZRg&oe=634A6A63',
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(_title),
+        ),
+        body: _children[_currentIndex],
+        drawer: Drawer(
+          backgroundColor: primary,
+          child: ListView(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(_fullname ?? "..."),
+                accountEmail: Text(_username ?? "..."),
+                currentAccountPicture: _avatar != null
+                    ? CircleAvatar(
+                        radius: 60.0,
+                        backgroundImage: NetworkImage(
+                          'https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745',
+                        ),
+                      )
+                    : CircularProgressIndicator(),
+                decoration: BoxDecoration(
+                  color: primaryDark,
                 ),
               ),
-              decoration: BoxDecoration(
-                color: primaryDark,
+              ListTile(
+                leading: Icon(
+                  Icons.person,
+                  color: icons,
+                ),
+                title: Text(
+                  'เกี่ยวกับเรา',
+                  style: TextStyle(color: icons),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/about');
+                },
               ),
+              ListTile(
+                leading: Icon(
+                  Icons.info,
+                  color: icons,
+                ),
+                title: Text(
+                  'ข้อมูลการใช้งาน',
+                  style: TextStyle(color: icons),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/info');
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.mail,
+                  color: icons,
+                ),
+                title: Text(
+                  'ติดต่อทีมงาน',
+                  style: TextStyle(color: icons),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/contact');
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.logout,
+                  color: icons,
+                ),
+                title: Text(
+                  'ออกจากระบบ',
+                  style: TextStyle(color: icons),
+                ),
+                onTap: () {
+                  logout();
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          onTap: onBottomBarTapChange,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              label: 'หน้าหลัก',
             ),
-            ListTile(
-              leading: Icon(
-                Icons.person,
-                color: icons,
-              ),
-              title: Text(
-                'เกี่ยวกับเรา',
-                style: TextStyle(color: icons),
-              ),
-              onTap: () {
-                Navigator.pushNamed(context, '/about');
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart_outlined),
+              label: 'รายงาน',
             ),
-            ListTile(
-              leading: Icon(
-                Icons.info,
-                color: icons,
-              ),
-              title: Text(
-                'ข้อมูลการใช้งาน',
-                style: TextStyle(color: icons),
-              ),
-              onTap: () {
-                Navigator.pushNamed(context, '/info');
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications_outlined),
+              label: 'การแจ้งเตือน',
             ),
-            ListTile(
-              leading: Icon(
-                Icons.mail,
-                color: icons,
-              ),
-              title: Text(
-                'ติดต่อทีมงาน',
-                style: TextStyle(color: icons),
-              ),
-              onTap: () {
-                Navigator.pushNamed(context, '/contact');
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined),
+              label: 'ตั้งค่า',
             ),
-            ListTile(
-              leading: Icon(
-                Icons.logout,
-                color: icons,
-              ),
-              title: Text(
-                'ออกจากระบบ',
-                style: TextStyle(color: icons),
-              ),
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/login');
-              },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              label: 'โปรไฟล์',
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        onTap: onBottomBarTapChange,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'หน้าหลัก',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.show_chart_outlined),
-            label: 'รายงาน',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_outlined),
-            label: 'การแจ้งเตือน',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: 'ตั้งค่า',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'โปรไฟล์',
-          ),
-        ],
       ),
     );
   }
