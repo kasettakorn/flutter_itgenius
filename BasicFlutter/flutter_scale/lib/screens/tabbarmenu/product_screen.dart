@@ -6,6 +6,7 @@ import 'package:flutter_scale/screens/tabbarmenu/product_item_list.dart';
 import 'package:flutter_scale/services/rest_api.dart';
 import 'package:flutter_scale/themes/colors.dart';
 
+var refreshKey = GlobalKey<RefreshIndicatorState>();
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
 
@@ -14,11 +15,13 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
+        key: refreshKey,
         onRefresh: () async {
           setState(() {});
         },

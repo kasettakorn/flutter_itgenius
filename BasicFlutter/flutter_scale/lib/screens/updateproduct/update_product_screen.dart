@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale/components/custom_widgets.dart';
 import 'package:flutter_scale/models/ProductsModel.dart';
+import 'package:flutter_scale/screens/tabbarmenu/product_screen.dart';
 import 'package:flutter_scale/services/rest_api.dart';
 import 'package:flutter_scale/utils/utility.dart';
 
@@ -48,6 +49,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
           if (response) {
             Navigator.pop(context, true);
+            refreshKey.currentState!.show();
           } else {
             Utility.getInstance()!.showAlertDialog(context, 'เกิดข้อผิดพลาด',
                 'ไม่สามารถแก้ไขสินค้าได้ กรุณาลองอีกครั้ง');

@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_scale/models/ProductsModel.dart';
+import 'package:flutter_scale/screens/tabbarmenu/product_screen.dart';
 import 'package:flutter_scale/screens/updateproduct/update_product_screen.dart';
 import 'package:flutter_scale/services/rest_api.dart';
-import 'package:flutter_scale/utils/utility.dart';
 
 // --------------------------------------------------------
 // สร้าง ListView สำหรับแสดงรายการสินค้า
@@ -118,11 +118,11 @@ Widget listViewProduct(List<ProductsModel> products) {
                                             .deleteProduct(product);
                                         if (response) {
                                           Navigator.of(context).pop();
-                                          Utility.getInstance()!.showAlertDialog(
-                                              context,
-                                              'เกิดข้อผิดพลาด',
-                                              'ไม่สามารถลบสินค้าได้ กรุณาลองอีกครั้ง');
-                                          Navigator.of(context).pop();
+                                          refreshKey.currentState!.show();
+                                          // Utility.getInstance()!.showAlertDialog(
+                                          //     context,
+                                          //     'เกิดข้อผิดพลาด',
+                                          //     'ไม่สามารถลบสินค้าได้ กรุณาลองอีกครั้ง');
                                         }
                                         // else {
                                         //   Utility.getInstance()!.showAlertDialog(

@@ -26,10 +26,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Widget> _children = [
     HomeScreen(),
-    NotificationScreen(),
-    ProfileScreen(),
     ReportScreen(),
+    NotificationScreen(),
     SettingsScreen(),
+    ProfileScreen(),
   ];
 
   void onBottomBarTapChange(int index) {

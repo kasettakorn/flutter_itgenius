@@ -1,4 +1,6 @@
 {
     "cmake.configureOnOpen": false,
-    "explorer.compactFolders": false
+    "explorer.compactFolders": false,
+    "cmake.sourceDirectory": "${workspaceFolder}/linux",
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
