@@ -3,6 +3,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino/context_menu.dart';
+import 'package:flutter_cupertino/cupertino_picker.dart';
+import 'package:flutter_cupertino/cupertino_tabbar.dart';
+import 'package:flutter_cupertino/detect_platform.dart';
+import 'package:flutter_cupertino/universal_design.dart';
 
 void main() {
   return (runApp(MyApp()));
@@ -18,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: CupertinoThemeData(
         brightness: Brightness.light,
       ),
-      home: ContextMenuDemo(),
+      home: UniversalDesign(),
     );
   }
 }
