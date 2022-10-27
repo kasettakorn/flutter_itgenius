@@ -71,7 +71,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width - 120,
-                child: inputFieldWidget(
+                child: i(
                     context, Icon(Icons.shopping_cart), 'ชื่อสินค้า',
                     (onValidateValue) {
                   if (onValidateValue!.isEmpty) {

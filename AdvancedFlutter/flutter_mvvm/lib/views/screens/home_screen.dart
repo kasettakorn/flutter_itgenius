@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget getMediaWidget(BuildContext context, ApiResponse apiResponse) {
-    List<Media>? _medias = apiResponse.data as List<Media>?;
+    List<Media>? medias = apiResponse.data as List<Media>?;
     switch (apiResponse.status) {
       case Status.LOADING:
         return Center(child: CircularProgressIndicator());
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Expanded(
               flex: 8,
-              child: PlayerListWidget(_medias!, (Media media) {
+              child: PlayerListWidget(medias!, (Media media) {
                 Provider.of<MediaViewModel>(context, listen: false)
                     .setSelectedMedia(media);
               }),

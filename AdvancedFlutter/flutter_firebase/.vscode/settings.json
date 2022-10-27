@@ -1,0 +1,6 @@
+{
+    "editor.fontFamily": "'Fira Code'",
+    "editor.fontLigatures": true,
+    "explorer.compactFolders": false,
+    "java.configuration.updateBuildConfiguration": "automatic"
+}

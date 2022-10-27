@@ -1,11 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/providers/app_locale.dart';
-import 'package:flutter_localization/demo_localization.dart';
-import 'package:flutter_localization/models/app_language.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localization/helper/shared_pref.dart';
+import 'package:flutter_localization/models/app_language.dart';
+import 'package:flutter_localization/providers/app_locale.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,26 +15,53 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //สร้าง object โหลด model สำหรับ dropdown และสำหรับสลับภาษา
-  late AppLanguage dropdownValue;
 
-  // เก็บภาษาจากระบบ เช่น th_TH en_US
-  late String currentDefaultSystemLocale;
-  int selectedLanguageIndex = 0;
+  // สำหรับการเปลี่ยนภาษา
+  // สร้าง Object โหลด Model สำหรับ Drop down list
+  late AppLanguage dropDownValue;
+  late String currentDefaultSystemLocale; // เก็บตัวภาษาจากระบบ // th_TH
+  int selectedLangIndex = 0;
   late AppLocale _appLocale;
 
   @override
   void initState() {
     super.initState();
-    dropdownValue = AppLanguage.languages().first;
+    dropDownValue = AppLanguage.languages().first;
   }
 
-  //เมื่อมีการเปลี่ยนแปลงใน UI ให้ทำงานซ้ำ เปรียบเสมือน componentDidUpdate()
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _appLocale = Provider.of<AppLocale>(context);
+
+    getLocale().then((locale) {
+      _appLocale.onLocaleChange(Locale(locale.languageCode));
+      dropDownValue = AppLanguage.languages().firstWhere(
+        (element) => element.languageCode == locale.languageCode
+      );
+      _setFlag();
+    });
+    
   }
+
+  // ฟังก์ชันตัดคำเลือกภาษา เช่น en_EN ตัดคำเป็น en
+  void _setFlag() {
+    currentDefaultSystemLocale = _appLocale.locale.languageCode.split('_')[0];
+    setState(() {
+      selectedLangIndex = _getLangIndex(currentDefaultSystemLocale);
+    });
+  }
+
+  // ฟังก์ชันสำหรับนำ index ที่ได้ไปเลือกภาษา
+  int _getLangIndex(String currentDefaultSystemLocale){
+    int _langIndex = 0;
+    switch(currentDefaultSystemLocale){
+      case 'en': _langIndex = 0; break;
+      case 'th': _langIndex = 1; break;
+    }
+    return _langIndex;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,42 +70,40 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(AppLocalizations.of(context)!.home),
         actions: [
           Padding(
-            padding: EdgeInsets.only(top: 16),
-            child: Text(
-              AppLocalizations.of(context)!.chooseLanguage,
-              style: TextStyle(color: Colors.white),
-            ),
+            padding: EdgeInsets.only(top: 20.0),
+            child: Text(AppLocalizations.of(context)!.chooseLanguage),
           ),
-          SizedBox(
-            width: 10,
-          ),
+          SizedBox(width: 8.0,),
           Padding(
-            padding: EdgeInsets.only(top: 4),
+            padding: EdgeInsets.only(top: 5.0),
             child: DropdownButton(
-              dropdownColor: Colors.orange,
+              dropdownColor: Colors.purple,
               iconEnabledColor: Colors.white,
-              underline: Container(height: 0),
+              underline: Container(
+                height: 0,
+
+              ),
               onChanged: (AppLanguage? language) {
-                dropdownValue = language!;
+                dropDownValue = language!;
                 _appLocale.onLocaleChange(Locale(language.languageCode));
+                _setFlag();
+                setLocale(language.languageCode);
               },
-              value: dropdownValue,
+              value: dropDownValue,
               items: AppLanguage.languages()
-                  .map<DropdownMenuItem<AppLanguage>>(
-                    (language) => DropdownMenuItem<AppLanguage>(
-                      value: language,
-                      child: Text(
-                        language.languageName,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                .map<DropdownMenuItem<AppLanguage>>(
+                  (e) => DropdownMenuItem<AppLanguage>(
+                    value: e,
+                    child: Text(e.languageName, style: TextStyle(color: Colors.white)),
                   )
-                  .toList(),
+                ).toList(), 
             ),
           )
         ],
       ),
-      body: Center(child: DemoLocalizationScreen()),
+      body: Center(
+        child: Text(AppLocalizations.of(context)!.hello),
+      ),
     );
   }
 }
