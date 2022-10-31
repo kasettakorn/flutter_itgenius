@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/views/screens/login_screen.dart';
 import 'package:flutter_firebase/views/screens/product_screen.dart';
+import 'package:flutter_firebase/views/screens/upload_image_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,12 +58,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ProductScreen(),
                 ));
               },
               child: Text('Product'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => UploadImageScreen(),
+                ));
+              },
+              child: Text('Upload'),
             ),
           ],
         ),
